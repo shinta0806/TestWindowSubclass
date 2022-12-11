@@ -8,13 +8,14 @@
 // 
 // ----------------------------------------------------------------------------
 
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Microsoft.UI.Xaml;
+
 using PInvoke;
+
 using TestWindowSubclass.Helpers;
+
 using Windows.Graphics;
-using Windows.System;
+
 using WinRT.Interop;
 
 namespace TestWindowSubclass;
@@ -118,7 +119,15 @@ public sealed partial class MainWindow : WindowEx
     // private 関数
     // ====================================================================
 
-    private IntPtr CustomSubclassProc(IntPtr hwnd, User32.WindowMessage msg, IntPtr wPalam, IntPtr lParam, IntPtr _1, IntPtr _2)
+    /// <summary>
+    /// カスタムウィンドウプロシージャー
+    /// </summary>
+    /// <param name="hWnd">ウィンドウハンドル</param>
+    /// <param name="msg">メッセージ</param>
+    /// <param name="wPalam">追加のメッセージ情報</param>
+    /// <param name="lParam">追加のメッセージ情報</param>
+    /// <returns></returns>
+    private IntPtr CustomSubclassProc(IntPtr hWnd, User32.WindowMessage msg, IntPtr wPalam, IntPtr lParam, IntPtr _1, IntPtr _2)
     {
         switch (msg)
         {
@@ -138,11 +147,11 @@ public sealed partial class MainWindow : WindowEx
                     return IntPtr.Zero;
                 }
 
-                // それ以外は次のハンドラーにお任せ
-                return DefSubclassProc(hwnd, msg, wPalam, lParam);
+                // ヘルプボタン以外は次のハンドラーにお任せ
+                return DefSubclassProc(hWnd, msg, wPalam, lParam);
             default:
                 // WM_SYSCOMMAND 以外は次のハンドラーにお任せ
-                return DefSubclassProc(hwnd, msg, wPalam, lParam);
+                return DefSubclassProc(hWnd, msg, wPalam, lParam);
         }
     }
 
