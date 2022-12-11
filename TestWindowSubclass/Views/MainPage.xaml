@@ -7,8 +7,8 @@
     Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
     mc:Ignorable="d">
 
-    <StackPanel>
-        <TextBlock Text="Test" />
-        <CheckBox Content="Test" />
+    <StackPanel Margin="20">
+        <TextBlock Text="タイトルバーのヘルプボタンクリックでウィンドウサイズ変更" />
+        <CheckBox Content="連打しても落ちないかの確認用" Margin="0,10,0,0" />
     </StackPanel>
 </Page>
