@@ -1,0 +1,7 @@
+// モジュール
+Comctl32.*
+User32.*
+
+// モジュール外
+WM_SYSCOMMAND
+SC_CONTEXTHELP
