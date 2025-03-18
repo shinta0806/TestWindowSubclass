@@ -1,4 +1,4 @@
-﻿using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
 
 using TestWindowSubclass.ViewModels;
 
@@ -13,7 +13,7 @@ public sealed partial class MainPage : Page
 
     public MainPage()
     {
-        ViewModel = App.GetService<MainViewModel>();
+        ViewModel = new();
         InitializeComponent();
     }
 }

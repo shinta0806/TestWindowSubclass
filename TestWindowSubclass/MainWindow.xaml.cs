@@ -8,7 +8,7 @@
 // 
 // ----------------------------------------------------------------------------
 
-using TestWindowSubclass.Helpers;
+using TestWindowSubclass.Views;
 
 using Windows.Graphics;
 using Windows.Win32;
@@ -35,8 +35,8 @@ public sealed partial class MainWindow : WindowEx
 
         // 各種初期化
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
-        Content = null;
-        Title = "AppDisplayName".GetLocalized();
+        Content = new MainPage();
+        Title = "TestWindowSubclass";
         HWND hWnd = (HWND)WindowNative.GetWindowHandle(this);
         ShowHelpButton(hWnd);
 
