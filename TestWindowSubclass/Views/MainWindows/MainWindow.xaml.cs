@@ -111,9 +111,9 @@ public sealed partial class MainWindow : WindowEx
 	/// タイトルバーにヘルプボタンを表示
 	/// </summary>
 	/// <param name="hWnd">ウィンドウハンドル</param>
-	private void ShowHelpButton(HWND hWnd)
+	private static void ShowHelpButton(HWND hWnd)
 	{
 		Int32 exStyle = PInvoke.GetWindowLong(hWnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
-		PInvoke.SetWindowLong(hWnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, exStyle | (Int32)WINDOW_EX_STYLE.WS_EX_CONTEXTHELP);
+		_ = PInvoke.SetWindowLong(hWnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, exStyle | (Int32)WINDOW_EX_STYLE.WS_EX_CONTEXTHELP);
 	}
 }
