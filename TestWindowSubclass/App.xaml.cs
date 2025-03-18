@@ -1,9 +1,6 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
-using TestWindowSubclass.ViewModels;
-using TestWindowSubclass.Views;
+using TestWindowSubclass.Views.MainWindows;
 
 namespace TestWindowSubclass;
 

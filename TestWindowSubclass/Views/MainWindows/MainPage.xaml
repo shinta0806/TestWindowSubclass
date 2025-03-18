@@ -1,5 +1,5 @@
-﻿<Page
-    x:Class="TestWindowSubclass.Views.MainPage"
+<Page
+    x:Class="TestWindowSubclass.Views.MainWindows.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,8 +7,8 @@
     Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
     mc:Ignorable="d">
 
-    <StackPanel Margin="20">
-        <TextBlock Text="タイトルバーのヘルプボタンクリックでウィンドウサイズ変更" />
-        <CheckBox Content="連打しても落ちないかの確認用" Margin="0,10,0,0" />
-    </StackPanel>
+	<StackPanel Margin="20">
+		<TextBlock Text="タイトルバーのヘルプボタンクリックでウィンドウサイズ変更" />
+		<CheckBox Content="連打しても落ちないかの確認用" Margin="0,10,0,0" />
+	</StackPanel>
 </Page>
