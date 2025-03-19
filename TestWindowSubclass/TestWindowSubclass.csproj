@@ -13,6 +13,17 @@
 		<Nullable>enable</Nullable>
 		<UseWinUI>true</UseWinUI>
 		<EnableMsixTooling>true</EnableMsixTooling>
+		<PublishAot>True</PublishAot>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+		<AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+		<PackageCertificateThumbprint>996784619082BFCF73EC43AB9DC25161FDDD9476</PackageCertificateThumbprint>
+		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+		<AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
+		<AppxBundle>Never</AppxBundle>
+		<AppInstallerUri>http://example.com</AppInstallerUri>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -36,6 +47,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Using Include="System.Diagnostics" />
 		<Using Include="WinUIEx" />
 	</ItemGroup>
 

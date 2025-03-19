@@ -1,6 +1,6 @@
 using Microsoft.UI.Xaml.Controls;
 
-using TestWindowSubclass.ViewModels;
+using TestWindowSubclass.ViewModels.MainWindows;
 
 namespace TestWindowSubclass.Views.MainWindows;
 

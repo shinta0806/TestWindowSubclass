@@ -8,10 +8,12 @@
 // 
 // ----------------------------------------------------------------------------
 
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
 using Windows.Graphics;
 using Windows.Win32;
 using Windows.Win32.Foundation;
-using Windows.Win32.UI.Shell;
 using Windows.Win32.UI.WindowsAndMessaging;
 
 using WinRT.Interop;
@@ -32,6 +34,7 @@ public sealed partial class MainWindow : WindowEx
 		InitializeComponent();
 
 		// 各種初期化
+		_instance = this;
 		AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/WindowIcon.ico"));
 		Content = new MainPage();
 		Title = "TestWindowSubclass";
@@ -39,8 +42,11 @@ public sealed partial class MainWindow : WindowEx
 		ShowHelpButton(hWnd);
 
 		// サブクラス化
-		_subclassProc = new SUBCLASSPROC(CustomSubclassProc);
-		PInvoke.SetWindowSubclass(hWnd, _subclassProc, UIntPtr.Zero, UIntPtr.Zero);
+		unsafe
+		{
+			delegate* unmanaged[Stdcall]<HWND, UInt32, WPARAM, LPARAM, nuint, nuint, LRESULT> subclassProc = &CustomSubclassProc;
+			PInvoke.SetWindowSubclass(hWnd, subclassProc, UIntPtr.Zero, UIntPtr.Zero);
+		}
 	}
 
 	// ====================================================================
@@ -58,9 +64,9 @@ public sealed partial class MainWindow : WindowEx
 	// ====================================================================
 
 	/// <summary>
-	/// カスタムウィンドウプロシージャーを保持
+	/// CustomSubclassProc からのアクセス用
 	/// </summary>
-	private readonly SUBCLASSPROC _subclassProc;
+	private static MainWindow? _instance;
 
 	/// <summary>
 	/// ウィンドウサイズ変更量
@@ -79,23 +85,24 @@ public sealed partial class MainWindow : WindowEx
 	/// <param name="wPalam">追加のメッセージ情報</param>
 	/// <param name="lParam">追加のメッセージ情報</param>
 	/// <returns></returns>
-	private LRESULT CustomSubclassProc(HWND hWnd, UInt32 msg, WPARAM wPalam, LPARAM lParam, UIntPtr _1, UIntPtr _2)
+	[UnmanagedCallersOnly(CallConvs = new Type[] { typeof(CallConvStdcall) })]
+	private static LRESULT CustomSubclassProc(HWND hWnd, UInt32 msg, WPARAM wPalam, LPARAM lParam, nuint _1, nuint _2)
 	{
 		switch (msg)
 		{
 			case PInvoke.WM_SYSCOMMAND:
-				if ((UInt32)wPalam == PInvoke.SC_CONTEXTHELP)
+				if ((UInt32)wPalam == PInvoke.SC_CONTEXTHELP && _instance != null)
 				{
 					// ヘルプボタンの場合は自前処理
-					if (AppWindow.Size.Height < TURN_MIN && _delta < 0)
+					if (_instance.AppWindow.Size.Height < TURN_MIN && _instance._delta < 0)
 					{
-						_delta = -_delta;
+						_instance._delta = -_instance._delta;
 					}
-					else if (AppWindow.Size.Height > TURN_MAX && _delta > 0)
+					else if (_instance.AppWindow.Size.Height > TURN_MAX && _instance._delta > 0)
 					{
-						_delta = -_delta;
+						_instance._delta = -_instance._delta;
 					}
-					AppWindow.Resize(new SizeInt32(AppWindow.Size.Width, AppWindow.Size.Height + _delta));
+					_instance.AppWindow.Resize(new SizeInt32(_instance.AppWindow.Size.Width, _instance.AppWindow.Size.Height + _instance._delta));
 					return (LRESULT)IntPtr.Zero;
 				}
 
@@ -111,9 +118,9 @@ public sealed partial class MainWindow : WindowEx
 	/// タイトルバーにヘルプボタンを表示
 	/// </summary>
 	/// <param name="hWnd">ウィンドウハンドル</param>
-	private void ShowHelpButton(HWND hWnd)
+	private static void ShowHelpButton(HWND hWnd)
 	{
 		Int32 exStyle = PInvoke.GetWindowLong(hWnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
-		PInvoke.SetWindowLong(hWnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, exStyle | (Int32)WINDOW_EX_STYLE.WS_EX_CONTEXTHELP);
+		_ = PInvoke.SetWindowLong(hWnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, exStyle | (Int32)WINDOW_EX_STYLE.WS_EX_CONTEXTHELP);
 	}
 }
