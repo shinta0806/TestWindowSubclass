@@ -12,7 +12,7 @@
   <Identity
     Name="F2886E01-D1EF-4162-AA66-B9AA2645CFB9"
     Publisher="CN=shinta"
-    Version="1.0.0.0" />
+    Version="1.0.1.0" />
 
   <Properties>
     <DisplayName>TestWindowSubclass</DisplayName>
